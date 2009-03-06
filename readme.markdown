@@ -40,8 +40,10 @@ The following cron entry will start the daemon every hour.  If the process is al
 
     0 * * * * /usr/bin/ruby /u/apps/your_app/current/script/runner -e production "CampaignSender.new.run"
     
-If the process every dies for any reason cron will notify you of the stack trace via e-mail.  And one hour (or less) later the process will fire itself back up again.
+If the process ever dies for any reason cron will send you the stack trace via e-mail (if you have that setup right).  And one hour (or less) later the process will fire itself right back up again.
 
 
 Enjoy,
+
 Josh Goebel
+Dreamer3 on #rubyonrails/freenode
