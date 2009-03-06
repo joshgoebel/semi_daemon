@@ -51,17 +51,15 @@ class SemiDaemon
   # process management
 
   def pid_file_path
+    return pid_file if pid_file.include?("/")
     File.join(RAILS_ROOT,"log",pid_file)    
   end
 
   def create_pid_file
-    f = File.new(pid_file_path,"w")
-    f.write(Process.pid)
-    f.close
+    File.new(pid_file_path,"w") { |f| f.write(Process.pid) }
   end
 
   def running?
-     # load pid file
      if File.exists?(pid_file)
        pid=File.read(pid_file)
        God::System::Process.new(pid).exists?
@@ -69,11 +67,11 @@ class SemiDaemon
    end
   
   def work
-    raise "You need to define the run method in your subclass of SemiDaemon."
+    raise "You need to define the work method in your subclass of SemiDaemon."
   end
   
   def run
-    raise "You must specify `interval 1.minute` or similar in your class."
+    raise "You must specify `interval 1.minute` or similar in your class to set the interval."
     return if running?
     Signal.trap("TERM") do 
       ActiveRecord::Base.logger.info "#{daemon_name} stopped."
