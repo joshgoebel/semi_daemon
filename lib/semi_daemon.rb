@@ -59,7 +59,7 @@ class SemiDaemon
   end
 
   def create_pid_file
-    File.new(pid_file_path,"w") { |f| f.write(Process.pid) }
+    File.open(pid_file_path,"w") { |f| f.write(Process.pid) }
   end
 
   def running?
