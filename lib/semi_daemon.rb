@@ -23,11 +23,14 @@ class SemiDaemon
     def interval(int=nil)
       int ? @interval=int : @interval
     end
+    
+    def inherited(child)
+      child.log_file "#{child.daemon_name}.log"
+      child.pid_file "#{child.daemon_name}.pid"
+    end
+
   end
   
-  log_file "#{daemon_name}.log"
-  pid_file "#{daemon_name}.pid"
-
   def method_missing(m,*args)
     if [:log_file, :pid_file, :interval, :daemon_name].include?(m)
       self.class.send(m) 
@@ -71,7 +74,7 @@ class SemiDaemon
   end
   
   def run
-    raise "You must specify `interval 1.minute` or similar in your class to set the interval."
+    raise "You must specify `interval 1.minute` or similar in your class to set the interval." if interval.nil?
     return if running?
     Signal.trap("TERM") do 
       ActiveRecord::Base.logger.info "#{daemon_name} stopped."
