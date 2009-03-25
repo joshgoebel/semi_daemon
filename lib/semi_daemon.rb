@@ -63,8 +63,8 @@ class SemiDaemon
   end
 
   def running?
-     if File.exists?(pid_file)
-       pid=File.read(pid_file)
+     if File.exists?(pid_file_path)
+       pid=File.read(pid_file_path)
        God::System::Process.new(pid).exists?
      end
    end
