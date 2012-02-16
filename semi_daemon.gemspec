@@ -15,7 +15,8 @@ Gem::Specification.new do |s|
   
   s.extra_rdoc_files = [ "readme.markdown" ]
   s.files= %w(Rakefile) + Dir.glob("lib/**/*") + 
-    Dir.glob("test/**/*")
+    Dir.glob("test/**/*") +
+    Dir.glob("vendor/**/*")
   
   s.require_path = "lib"
   # s.extensions = FileList["ext/**/extconf.rb"].to_a

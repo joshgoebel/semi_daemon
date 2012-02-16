@@ -27,12 +27,12 @@ class SemiDaemon
     end
     
     def inherited(child)
-      child.log_file "#{child.daemon_name}.log"
-      child.pid_file "#{child.daemon_name}.pid"
+      child.log_file "log/#{child.daemon_name}.log"
+      child.pid_file "log/#{child.daemon_name}.pid"
     end
 
     def stop_file
-      "#{daemon_name}.stop"
+      "log/#{daemon_name}.stop"
     end
 
   end
@@ -50,7 +50,7 @@ class SemiDaemon
 
   def logger
     @logger ||= begin
-      l=Logger.new root("log/#{log_file}")
+      l=Logger.new root(log_file)
       l.formatter = SimpleLogFormatter.new
       l
     end
